@@ -1,0 +1,76 @@
+import speech_recognition as sr
+import pyttsx3
+import random
+import time
+
+engine = pyttsx3.init()
+assistant_name = "Mistfall Voice Bot"
+
+def speak(text):
+    engine.say(text)
+    engine.runAndWait()
+
+def listen_command():
+    recognizer = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening...")
+        speak("I'm listening, please speak now.")
+        try:
+            audio = recognizer.listen(source, timeout=5)
+            command = recognizer.recognize_google(audio)
+            print("You said:", command)
+            return command.lower()
+        except Exception:
+            return ""
+
+def reply_to_command(command):
+    if not command:
+        return "Sorry, I couldn't catch that. Please try again."
+
+    if "hello" in command or "hi" in command:
+        return random.choice([
+            "Hello! How can I help you?",
+            "Hi there! Ready when you are.",
+            "Greetings! Tell me what you need."
+        ])
+
+    if "your name" in command or "who are you" in command:
+        return f"I am {assistant_name}, your voice assistant bot!"
+
+    if "time" in command:
+        current = time.strftime("%I:%M %p")
+        return f"The current time is {current}"
+
+    if "bye" in command or "exit" in command or "quit" in command:
+        return "Goodbye! Have a great day ahead."
+
+    if "motivate me" in command or "inspire" in command:
+        return random.choice([
+            "Keep going, you're doing amazing!",
+            "Small steps every day lead to big results!",
+            "You are capable of more than you know!"
+        ])
+
+    return random.choice([
+        "That sounds interesting, but I’m still learning!",
+        "Could you repeat that differently?",
+        "Let me think about that…"
+    ])
+
+def main():
+    print(f"\n🎙 {assistant_name} Activated! (Say 'bye' to exit)\n")
+    speak(f"{assistant_name} is now active. You can start speaking your commands.")
+
+    while True:
+        cmd = listen_command()
+        response = reply_to_command(cmd)
+        print("Bot:", response)
+        speak(response)
+
+        if response.lower().startswith("goodbye"):
+            break
+
+        time.sleep(0.3)
+
+if __name__ == "__main__":
+    main()

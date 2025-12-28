@@ -1,0 +1,48 @@
+assistant_name = "Mistfall Whisper"
+
+greeting_responses = [
+    "Ah, a voice in the mist... Hello. What brings you to my investigation?",
+    "Greetings, seeker. The fog has stories today. Shall we begin?",
+    "Hello. The swamp listens, and so do I."
+]
+
+def reply_to_command(command):
+    if not command:
+        return "Your voice faded before I could catch it... speak again."
+
+    if "hello" in command or "hi" in command:
+        return random.choice(greeting_responses)
+
+    if "your name" in command or "who are you" in command:
+        return "Names hold power. But you may call me *Mistfall Whisper*."
+
+    if "time" in command:
+        current = time.strftime("%I:%M %p")
+        return f"The clock ticks {current}. Time never waits, even here."
+
+    if "motivate me" in command or "inspire" in command:
+        return random.choice([
+            "Courage is quiet, but unstoppable. You have it.",
+            "Even shadows fear the rising flame. Keep going.",
+            "Mysteries yield to the persistent mind. Don’t stop now."
+        ])
+
+    if "swamp" in command or "mistfall" in command or "mist" in command:
+        return random.choice([
+            "The mist shifts when questions get too close to truth.",
+            "Mistfall never reveals itself fully. Only in fragments.",
+            "The air grows heavy... you're asking the right questions."
+        ])
+
+    if "pavan" in command:
+        return "That name echoes strangely in the bog... noted."
+
+    if "bye" in command or "exit" in command or "quit" in command:
+        return "Goodbye. The mist remembers those who ask questions."
+
+    return random.choice([
+        "The clues don’t connect yet... but they will.",
+        "Something is watching this conversation carefully.",
+        "I’ll file that under unsolved.",
+        "The answer hides between the words you didn’t say."
+    ])
